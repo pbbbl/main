@@ -72,9 +72,21 @@ const getGamesById = async (ids = []) => {
     return games;
   }
 };
-
+const getGamesByDate = async (date1, date2 = null) => {
+  let date = date1;
+  if (date2) {
+    date += `,${date2}`;
+  }
+  const params = {
+    date,
+  };
+  const games = await endpoints.games(params);
+  return games;
+};
 module.exports = {
   endpoints,
+  getGames: endpoints.games,
+  getGamesByDate,
   //   modules: { getSbGames },
   getGamesById,
 };
