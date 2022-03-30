@@ -13,6 +13,7 @@ const Id = () => `rndid${Random(10)}${Random(10)}`;
 const Random = (n = 16) => crypto.randomBytes(n).toString("hex");
 const Token = () => Random(50);
 const AesKey = () => Random(16);
+const ApiKey = () => Random(32);
 const crypto = require("crypto");
 
 (async () => {
@@ -29,6 +30,7 @@ const crypto = require("crypto");
       API_AESKEY: AesKey(),
       API_SALTKEY: AesKey(),
       API_OWNER_TOKEN: Token(),
+      API_DOPPLER_TOKEN: ApiKey(),
       SB_TOKEN: Token(),
       //   SB_CRON_TOKEN: Token(), // NEVER CHANGE ME
       SP_TOKEN: Token(),
@@ -36,9 +38,12 @@ const crypto = require("crypto");
       LOCKBOX_AESKEY: AesKey(),
       LOCKBOX_SALTKEY: AesKey(),
       SECRETS_ID: Id(),
-      SECRETS_VERSION: secrets.SECRETS_VERSION
-        ? secrets.SECRETS_VERSION + 1
-        : 1,
+      SECRETS_VERSION:
+        typeof secrets.SECRETS_VERSION == "string"
+          ? parseInt(secrets.SECRETS_VERSION) + 1
+          : typeof secrets.SECRETS_VERSION == "number"
+          ? secrets.SECRETS_VERSION + 1
+          : 1,
     };
 
     const fileName = `${modeId}.secrets.tmp.${DateTime.now().toFormat(
@@ -50,6 +55,7 @@ const crypto = require("crypto");
   } catch (err) {
     setTimeout(() => {
       console.warn("Error generating secrets:");
+      console.warn({ error: err });
     }, 2000);
     return null;
   }

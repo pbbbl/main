@@ -5,7 +5,7 @@ const api = express();
 api.get("/", (_, res) => {
   return res.status(200).send("howdy");
 });
-const routes = ["./api.secrets.js"];
+const routes = ["./api.doppler.js"];
 routes.forEach((rt) => {
   const route = require(rt);
   route(api);
