@@ -8,7 +8,8 @@
     "scripts": {
         "serve": "cd functions && nve 16 npm run serve",
         "server": "npm run serve",
-        "server:fns": "cd functions && nve 16 npm run serve:fns"
+        "server:fns": "cd functions && nve 16 npm run serve:fns",
+        "build": "cd app && nve 17 npm run build"
     },
     "devDependencies": {
         "prettier": "^2.3.2"
