@@ -9,11 +9,7 @@ const {
   getUpcomingGames,
 } = require("./useSportsbook.db");
 
-const {
-    getGames,
-    getGamesByDate,
-  
-  } = require("./useSportsbook.api");
+const { getGames, getGamesByDate } = require("./useSportsbook.api");
 const { getGamesById } = require("./useSportsbook.api");
 const { DateTime } = require("luxon");
 const callSportsbookCronJob = functions
@@ -40,28 +36,35 @@ const callSportsbookCronJob = functions
   });
 async function runSportsbookCronJob() {
   const gameIds = await getCronJobGameIds();
-  let games= []
+  let games = [];
   if (gameIds && gameIds?.length > 0) {
-       const gamesFromIds = await getGamesById(gameIds);
-       if(gamesFromIds?.length > 0){
-           gamesFromIds.forEach((game)=>{games.push(game)})
-       }
+    const gamesFromIds = await getGamesById(gameIds);
+    if (gamesFromIds?.length > 0) {
+      gamesFromIds.forEach((game) => {
+        games.push(game);
+      });
+    }
   }
-  const dttoday = DateTime.local({zone:'America/Los_Angeles'}).startOf('day').plus({minutes:30})toISODate();
-  const dttomorrow = DateTime.local({zone:'America/Los_Angeles'}).endOf('day').plus({minutes:30}).toISODate();
-  const freshGames = await getGamesByDate(dttoday,dttomorrow);
-  return [...games,...freshGames||[]]
-
+  const dttoday = DateTime.local({ zone: "America/Los_Angeles" })
+    .startOf("day")
+    .plus({ minutes: 30 })
+    .toISODate();
+  const dttomorrow = DateTime.local({ zone: "America/Los_Angeles" })
+    .endOf("day")
+    .plus({ minutes: 30 })
+    .toISODate();
+  const freshGames = await getGamesByDate(dttoday, dttomorrow);
+  return [...games, ...(freshGames || [])];
 }
 async function getCronJobGameIds() {
   const todaysGames = await getTodaysGames();
   const liveGames = await getLiveGames();
-//   const upcoming = await getUpcomingGames();
-  const arr = [...(liveGames || []), ...(todaysGames||[]) ];
-  if(arr?.length > 0){
-      return arr.map((game)=>game.gameId)
+  //   const upcoming = await getUpcomingGames();
+  const arr = [...(liveGames || []), ...(todaysGames || [])];
+  if (arr?.length > 0) {
+    return arr.map((game) => game.gameId);
   } else {
-      return null;
+    return null;
   }
 }
 module.exports = {
