@@ -1,0 +1,17 @@
+{
+    "name": "pbbbl-main",
+    "version": "0.0.1",
+    "description": "",
+    "author": "",
+    "private": true,
+    "license": "UNLICENSED",
+    "scripts": {
+        "serve": "cd functions && nve 16 npm run serve",
+        "server": "npm run serve",
+        "server:fns": "cd functions && nve 16 npm run serve:fns"
+    },
+    "devDependencies": {
+        "prettier": "^2.3.2"
+    },
+    "dependencies": {}
+}

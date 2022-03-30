@@ -1,0 +1,56 @@
+{
+    "functions": {
+        "source": "functions"
+    },
+    "database": {
+        "rules": "database.rules.json"
+    },
+    "firestore": {
+        "rules": "firestore.rules",
+        "indexes": "firestore.indexes.json"
+    },
+    "hosting": {
+        "public": "public",
+        "ignore": [
+            "firebase.json",
+            "**/.*",
+            "**/node_modules/**"
+        ],
+        "rewrites": [
+            {
+                "source": "**",
+                "destination": "/index.html"
+            }
+        ]
+    },
+    "storage": {
+        "rules": "storage.rules"
+    },
+    "emulators": {
+        "auth": {
+            "port": 8031
+        },
+        "functions": {
+            "port": 8032
+        },
+        "firestore": {
+            "port": 8033
+        },
+        "database": {
+            "port": 8034
+        },
+        "hosting": {
+            "port": 8035
+        },
+        "pubsub": {
+            "port": 8036
+        },
+        "storage": {
+            "port": 8037
+        },
+        "ui": {
+            "enabled": true,
+            "port": 8030
+        }
+    }
+}
