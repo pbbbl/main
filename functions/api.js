@@ -5,11 +5,11 @@ const api = express();
 api.get("/", (_, res) => {
   return res.status(200).send("howdy");
 });
-const routes = ["./api.sportsbook.js"];
-routes.forEach((rt) => {
-  const route = require(rt);
-  route(api);
-});
+// const routes = ["./api.sportsbook.js"];
+// routes.forEach((rt) => {
+//   const route = require(rt);
+//   route(api);
+// });
 // api.post('/secrets/dplswh', secrets.dplswh.post);
 
 const apiModule = functions.https.onRequest(api);
